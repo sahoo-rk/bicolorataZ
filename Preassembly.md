@@ -38,3 +38,17 @@ fmlrc2 -C 10 -t 40 ~/path/to/dir/in/comp_msbwt.npy ~/path/to/dir/in/lr.fastq.gz 
 bgzip -@ 40 ~/path/to/dir/in/lr.corrected.fa
 ```
 > The resulting ```lr.corrected.fa``` will be the input for downstream genome analysis with the ```sr.corrected.R1.fq.gz``` and ```sr.corrected.R2.fq.gz``` files being used for polishing the assembly. Check Assembly page for next steps.
+
+We further used a k-mer based read assessment to understand the sequencing coverage and genome size estimation. For the purpose, we used merqury amd Genomescope.
+```bash
+# Estimating the k-mer size
+$MERQURY/best_k.sh $genomesize
+```
+> For the genome sizes of 700 MB and 1200 MB, the estimated k-mer size was 19.67 and 20.06, respectively. We, therefore, used 20 as the k-mer size for our downstream analyses.
+
+```bash
+# Assessing error corrected short reads for k-mer distribution graph
+meryl count threads=$threads k=20 ~/path/to/dir/in/*.fq.gz output sr.meryl
+meryl histogram ~/path/to/dir/in/sr.meryl > sr.hist    #Not required. This analysis gets performed in the next command by default.
+Rscript ~/path/to/dir/genomescope.R -i ~/path/to/dir/in/sr.hist -o ~/path/to/dir/out -n $prefix -p 2 -k 20
+```
