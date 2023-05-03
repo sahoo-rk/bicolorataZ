@@ -18,10 +18,12 @@ longstitch ntLink-arks draft=contigs.fa reads=$reads out_prefix=$prefix t=$threa
 Next we polished the long contigs with the help of error corrected long reads using [medaka](https://github.com/nanoporetech/medaka).
 ```bash
 # Polishing the long contigs using error-corrected long-reads
-medaka_consensus -i ~/path/to/dir/in/lr.corrected.fa.gz -d ~/path/to/dir/in/long.contigs.fa -o ~/path/to/dir/out -m r104_e81_hac_g5015 -t $threads
+medaka_consensus -i ~/path/to/dir/in/lr.corrected.fa.gz -d ~/path/to/dir/in/long.contigs.fa \
+ -o ~/path/to/dir/out -m r104_e81_hac_g5015 -t $threads
 # The output of this programe is <consensus.contigs.fa>
 ```
-Subsequent polishing with short reads using [Polca](https://github.com/alekseyzimin/masurca).
+Subsequent polishing with short reads using [Polca](https://github.com/alekseyzimin/masurca) distributed as a part of MaSuRCA genome assembly toolkit.
 ```bash
-polca.sh -a ~/path/to/dir/in/consensus.contigs.fa -r '~/path/to/dir/in/sr.corrected.R1.fq.gz ~/path/to/dir/in/sr.corrected_R2.fq.gz' -t $threads -m 2G
+polca.sh -a ~/path/to/dir/in/consensus.contigs.fa -r '~/path/to/dir/in/sr.corrected.R1.fq.gz \
+ ~/path/to/dir/in/sr.corrected_R2.fq.gz' -t $threads -m 2G
 ```
