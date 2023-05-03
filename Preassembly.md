@@ -5,14 +5,14 @@ We have generated sequence data from whole body DNA extract of one female beetle
 
 ```bash
 # Running FastQC
-fastqc -o ~/path/to/dir ~/path/to/dir/*.fastq.gz*
-cd ~/path/to/dir
+fastqc -o ~/path/to/dir/out ~/path/to/dir/in/*.fastq.gz*
+cd ~/path/to/dir/out
 multiqc .
 ```
 ```bash
 # Running NanoPlot
-NanoPlot --summary ~/path/to/dir/sequencing_summary_1.txt ~/path/to/dir/sequencing_summary_2.txt \
- -t 40 -o ~/path/to/dir/nanoplot --N50 --minqual 9 -p $prefix
+NanoPlot --summary ~/path/to/dir/in/sequencing_summary_1.txt ~/path/to/dir/in/sequencing_summary_2.txt \
+ -t 40 -o ~/path/to/dir/out/nanoplot --N50 --minqual 9 -p $prefix
 ```
 > The resulting <.html> files from FastQC and NanoPlot were manually inspected for sequence metadata and read quality assessment.
 
