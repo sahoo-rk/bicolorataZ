@@ -37,4 +37,4 @@ fmlrc2 -C 10 -t 40 ~/path/to/dir/in/comp_msbwt.npy ~/path/to/dir/in/longread.fas
 # Compressing the error corrected long read for downstream processes
 bgzip -@ 40 ~/path/to/dir/in/longread.corrected.fa
 ```
-
+> The resulting ```longread.corrected.fa``` will be the input for downstream genome analysis with the ```sr_r1.fq.gz``` and ```sr_r2.fq.gz``` files for polishing the assembly.
