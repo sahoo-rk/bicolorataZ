@@ -11,7 +11,7 @@ multiqc .
 ```
 ```bash
 # Running NanoPlot
-NanoPlot --summary ~/path/to/dir/in/sequencing_summary_1.txt ~/path/to/dir/in/sequencing_summary_2.txt \
+NanoPlot --summary ~/path/to/dir/in/longread_summary_1.txt ~/path/to/dir/in/longread_summary_2.txt \
  -t 40 -o ~/path/to/dir/out/nanoplot --N50 --minqual 9 -p $prefix
 ```
 > The resulting <.html> files from FastQC and NanoPlot were manually inspected for sequence metadata and read quality assessment.
@@ -21,8 +21,8 @@ Because, in Nanopore sequencing platform, the DNA sequences are read through the
 However, we quality trimmed the short read illumina data as follows using [FastP](https://github.com/OpenGene/fastp).
 ```bash
 # Running FastP
-fastp -i ~/path/to/dir/in/R1.fastq.gz -o ~/path/to/dir/out/R1.fastq.gz \
- -I ~/path/to/dir/in/R2.fastq.gz -O ~/path/to/dir/out/R2.fastq.gz \
+fastp -i ~/path/to/dir/in/shortread_R1.fastq.gz -o ~/path/to/dir/out/shortread_R1.fastq.gz \
+ -I ~/path/to/dir/in/shortread_R2.fastq.gz -O ~/path/to/dir/out/shortread_R2.fastq.gz \
  --detect_adapter_for_pe --trim_poly_g -5 -3 -l 51 -j ~/path/to/dir/out/$prefix.json \ 
  -h ~/path/to/dir/out/$prefix.html -w 40
 ```
