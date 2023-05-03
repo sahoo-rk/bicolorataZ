@@ -35,17 +35,25 @@ polca.sh -a ~/path/to/dir/in/consensus.contigs.fa -r '~/path/to/dir/in/sr.correc
 
 Subsequently, the polca corrected contigs were screened for contaminants using [kraken2](https://github.com/DerrickWood/kraken2).
 ```bash
-# Building kraken database
-
 # Running kraken
 kraken2 --db $database --threads $threads --output ~/path/to/dir/out/kraken.out --confidence 0.10 \
  --report ~/path/to/dir/out/report.kraken <(dustmasker -in ~/path/to/dir/in/consensus.pc.contigs.fa \
  -outfmt fasta | sed -e '/^>/!s/[atgc]/N/g')
 
 # Extrcating an identified contaminant
-extract_kraken_reads.py -k ~/path/to/dir/in/kraken.out -s ~/path/to/dir/in/consensus.pc.contigs.fa -t 953 -r ~/path/to/dir/in/report.kraken \
- --include-children -o ~/path/to/dir/out/wolb.contigs.fa
+extract_kraken_reads.py -k ~/path/to/dir/in/kraken.out -s ~/path/to/dir/in/consensus.pc.contigs.fa \
+ -t 953 -r ~/path/to/dir/in/report.kraken --include-children -o ~/path/to/dir/out/wolb.contigs.fa
 
 #Isolating the assembly using an in-house python file
 python ~/path/to/dir/in/filter_assembly.py
 ```
+> As a result, we isolated the draft assembly ```draft.assembly.fa```
+
+Next, we extracted and performed a reference based annotation of the mitochondrial genome.
+```bash
+### Extracting and annotating mito genome 
+get_organelle_from_assembly.py -g $flye.graph -F animal_mt -o ~/path/to/dir/out --min-depth 10 -t $threads
+seqkit replace -p '.*' -r $prefix -o ~/path/to/dir/out/mitochondrion.fa ~/path/to/dir/in/*.fa
+runmitos.py --input ~/path/to/dir/in/mitochondrion.fa --noplots -c 2 -o ~/path/to/dir/out -r refseq89m -R ref
+```
+We further assessed our draft assembly as mentioned in the post-assembly files.
