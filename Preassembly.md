@@ -20,6 +20,7 @@ Because, in Nanopore sequencing platform, the DNA sequences are read through the
 
 However, we quality trimmed the short read illumina data as follows using [FastP](https://github.com/OpenGene/fastp).
 ```bash
+# Running FastP
 fastp -i ~/path/to/dir/in/R1.fastq.gz -o ~/path/to/dir/out/R1.fastq.gz \
  -I ~/path/to/dir/in/R2.fastq.gz -O ~/path/to/dir/out/R2.fastq.gz \
  --detect_adapter_for_pe --trim_poly_g -5 -3 -l 51 -j ~/path/to/dir/out/$prefix.json \ 
