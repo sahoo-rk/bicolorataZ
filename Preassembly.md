@@ -11,7 +11,7 @@ multiqc .
 ```
 ```bash
 # Running NanoPlot
-NanoPlot --summary ~/path/to/dir/in/longread_summary_1.txt ~/path/to/dir/in/longread_summary_2.txt \
+NanoPlot --summary ~/path/to/dir/in/lr_summary_1.txt ~/path/to/dir/in/lr_summary_2.txt \
  -t 40 -o ~/path/to/dir/out/nanoplot --N50 --minqual 9 -p $prefix
 ```
 > The resulting <.html> files from FastQC and NanoPlot were manually inspected for sequence metadata and read quality assessment.
@@ -21,8 +21,8 @@ Because, in Nanopore sequencing platform, the DNA sequences are read through the
 However, we quality trimmed the short read illumina data as follows using [FastP](https://github.com/OpenGene/fastp).
 ```bash
 # Running FastP
-fastp -i ~/path/to/dir/in/shortread_R1.fastq.gz -o ~/path/to/dir/out/shortread_R1.fastq.gz \
- -I ~/path/to/dir/in/shortread_R2.fastq.gz -O ~/path/to/dir/out/shortread_R2.fastq.gz \
+fastp -i ~/path/to/dir/in/sr_r1.fastq.gz -o ~/path/to/dir/out/sr_corrected_r1.fq.gz \
+ -I ~/path/to/dir/in/sr_r2.fastq.gz -O ~/path/to/dir/out/sr_r2.fq.gz \
  --detect_adapter_for_pe --trim_poly_g -5 -3 -l 51 -j ~/path/to/dir/out/$prefix.json \ 
  -h ~/path/to/dir/out/$prefix.html -w 40
 ```
@@ -30,10 +30,10 @@ fastp -i ~/path/to/dir/in/shortread_R1.fastq.gz -o ~/path/to/dir/out/shortread_R
 Our genome assembly pipeline aimed at long read based assembly where the short reads were primarily utilised to polish the long reads and the assembly files during the process. Therefore, we first ploished the nanopore long reads with the error corrected illumina short reads from FastP using [fmlrc2](https://github.com/HudsonAlpha/fmlrc2).
 ```bash
 # Building BWT using error corrected short reads from FastP
-gunzip -c ~/path/to/dir/in/shortread_R1.fastq.gz ~/path/to/dir/in/shortread_R2.fastq.gz \
+gunzip -c ~/path/to/dir/in/sr_r1.fq.gz ~/path/to/dir/in/sr_r2.fq.gz \
 | awk 'NR % 4 == 2' | tr NT TN | ropebwt2 -LR | tr NT TN | fmlrc2-convert ~/path/to/dir/out/comp_msbwt.npy
 # Error correcting the long read file
-fmlrc2 -C 10 -t 40 ~/path/to/dir/in/comp_msbwt.npy ~/path/to/dir/in/longread.fastq.gz ~/path/to/dir/out/longread.corrected.fa
+fmlrc2 -C 10 -t 40 ~/path/to/dir/in/comp_msbwt.npy ~/path/to/dir/in/lr.fastq.gz ~/path/to/dir/out/lr.corrected.fa
 # Compressing the error corrected long read for downstream processes
 bgzip -@ 40 ~/path/to/dir/in/longread.corrected.fa
 ```
