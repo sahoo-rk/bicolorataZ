@@ -22,7 +22,7 @@ medaka_consensus -i ~/path/to/dir/in/lr.corrected.fa.gz -d ~/path/to/dir/in/long
  -o ~/path/to/dir/out -m r104_e81_hac_g5015 -t $threads
 # The output of this programe is <consensus.contigs.fa>
 ```
-Subsequent polishing with short reads using [Polca](https://github.com/alekseyzimin/masurca) distributed as a part of MaSuRCA genome assembly toolkit.
+Subsequent polishing with short reads using [Polca](https://github.com/alekseyzimin/masurca), distributed as a part of MaSuRCA genome assembly toolkit.
 ```bash
 polca.sh -a ~/path/to/dir/in/consensus.contigs.fa -r '~/path/to/dir/in/sr.corrected.R1.fq.gz \
  ~/path/to/dir/in/sr.corrected_R2.fq.gz' -t $threads -m 2G
