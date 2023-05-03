@@ -39,7 +39,7 @@ bgzip -@ 40 ~/path/to/dir/in/lr.corrected.fa
 ```
 > The resulting ```lr.corrected.fa``` will be the input for downstream genome analysis with the ```sr.corrected.R1.fq.gz``` and ```sr.corrected.R2.fq.gz``` files being used for polishing the assembly. Check Assembly page for next steps.
 
-We further used a k-mer based read assessment to understand the sequencing coverage and genome size estimation. For the purpose, we used [meryl](https://github.com/marbl/meryl) amd [Genomescope](https://github.com/schatzlab/genomescope).
+We further used a k-mer based read assessment to understand the sequencing coverage and genome size estimation. For the purpose, we used [meryl](https://github.com/marbl/meryl) and [Genomescope](https://github.com/schatzlab/genomescope).
 ```bash
 # Estimating the k-mer size
 $MERQURY/best_k.sh $genomesize
