@@ -49,6 +49,6 @@ $MERQURY/best_k.sh $genomesize
 ```bash
 # Assessing error corrected short reads for k-mer distribution graph
 meryl count threads=$threads k=20 ~/path/to/dir/in/*.fq.gz output sr.meryl
-meryl histogram ~/path/to/dir/in/sr.meryl > sr.hist    #Not required. This analysis gets performed in the next command by default.
+meryl histogram ~/path/to/dir/in/sr.meryl > sr.hist
 Rscript ~/path/to/dir/genomescope.R -i ~/path/to/dir/in/sr.hist -o ~/path/to/dir/out -n $prefix -p 2 -k 20
 ```
