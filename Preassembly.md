@@ -9,3 +9,11 @@ fastqc -o ~/path/to/dir ~/path/to/dir/*.fastq.gz*
 cd ~/path/to/dir
 multiqc .
 ```
+```bash
+# Running NanoPlot
+NanoPlot --summary ~/path/to/dir/sequencing_summary_1.txt ~/path/to/dir/sequencing_summary_2.txt \
+ -t 40 -o ~/path/to/dir/nanoplot --N50 --minqual 9 -p $prefix
+```
+The resulting <.html> files from FastQC and NanoPlot were manually inspected for sequence metadata and read quality assessment.
+
+Because, in Nanopore sequencing platform, the DNA sequences are read through the changes in voltage, the base errors are randomly distributed in the entire length of reads. Hence, we do not usually do end trimming for Nanopore reads. However, quality control is done by default during the Guppy base calling, which is mostly carried out by the NGS facility or the service provider, that filters out the entire reads with average Phred quality less than 9.
