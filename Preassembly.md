@@ -30,7 +30,7 @@ fastp -i ~/path/to/dir/in/shortread_R1.fastq.gz -o ~/path/to/dir/out/shortread_R
 Our genome assembly pipeline aimed at long read based assembly where the short reads were primarily utilised to polish the long reads and the assembly files during the process. Therefore, we first ploished the nanopore long reads with the error corrected illumina short reads from FastP using [fmlrc2](https://github.com/HudsonAlpha/fmlrc2).
 ```bash
 # Building BWT using error corrected short reads from FastP
-gunzip -c ~/path/to/dir/in/R1.fastq.gz ~/path/to/dir/in/R2.fastq.gz | awk 'NR % 4 == 2' | tr NT TN | ropebwt2 -LR | tr NT TN | \
+gunzip -c ~/path/to/dir/in/shortread_R1.fastq.gz ~/path/to/dir/in/shortread_R2.fastq.gz | awk 'NR % 4 == 2' | tr NT TN | ropebwt2 -LR | tr NT TN | \
  fmlrc2-convert ~/path/to/dir/out/comp_msbwt.npy
 # Error correcting the long read file
 fmlrc2 -C 10 -t 40 ~/path/to/dir/in/comp_msbwt.npy ~/path/to/dir/in/longread.fastq.gz ~/path/to/dir/out/longread.corrected.fa
