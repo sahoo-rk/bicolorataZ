@@ -73,7 +73,8 @@ sed 's/,.*//g' draft.m4.endpurged.purged.fa | sed 's/scaffold/scaff_/g' > purged
 ```
 We then compare the draft and purged assembly using Quast.
 ```bash
-quast draft.assembly.fa purged.assembly.fa -r reference.fasta.gz -g genes.gff -t $threads -o ~/path/to/dir/out --circos --labels Draft,Purged
+quast draft.assembly.fa purged.assembly.fa -r reference.fasta.gz -g genes.gff -t $threads -o ~/path/to/dir/out \
+ --circos --labels Draft,Purged
 ```
 The finalized purged assembly then plotted for visual inspection using [BlobTools](https://github.com/blobtoolkit/blobtoolkit).
 ```bash
