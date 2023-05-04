@@ -36,7 +36,7 @@ scripts/hist_plot.py -c cutoffs.default PB.stat PB.coverage.default.png
 We can now check how the determined cutoff values are positioned across the base coverage graph. This step is essential as the cutoff values assigned at this step will be used to purge the duplications from the draft assembly. To make sure that we are using the right cutoffs, we manually set different sets of the cutoff and test which one of them performs best in purging duplicates, but at the same time not over purging.
 ```bash
 # Manually setting the cutoffs
-for i in $(c(1,2,3,4,5))
+for i in {1..5}
 do
  calcuts -l {a} -m {b} -u {c} PB.stat > cutoffs.m$i
  (m1: a=2, b=21, c=220; m2: a=1, b=21, c=220; m3: a=1, b=17, c=220; m4: a=1, b=21, c=500; m5: a=1, b=21, c=501)
@@ -67,10 +67,18 @@ do
   --download_path ./busco_downloads --offline -c $threads
 done
 ```
-
+The finalized assembly then shortened for fasta identifier and subsequently renamed for easy downstream processes.
+```bash
+sed 's/,.*//g' draft.m4.endpurged.purged.fa | sed 's/scaffold/scaff_/g' > purged.assembly.fa
+```
+We then compare the draft and purged assembly using Quast.
+```bash
+quast draft.assembly.fa purged.assembly.fa -r reference.fasta.gz -g genes.gff -t $threads -o ~/path/to/dir/out --circos --labels Draft,Purged
+```
+The finalized purged assembly then plotted for visual inspection using [BlobTools](https://github.com/blobtoolkit/blobtoolkit).
 ```bash
 # Using BlobTools
-blobtools create --fasta ~/path/to/dir/in/draft.m$i.endpurged.purged.fa ~/path/to/dir/out/assembly-blob
+blobtools create --fasta ~/path/to/dir/in/purged.assembly.fa ~/path/to/dir/out/assembly-blob
 blobtools add --busco  ~/path/to/dir/in/full_table.tsv ~/path/to/dir/out/assembly-blob
 blobtools view --remote ~/path/to/dir/out/assembly-blob
 blobtools host `pwd`
