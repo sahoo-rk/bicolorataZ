@@ -35,7 +35,9 @@ scripts/hist_plot.py -c cutoffs.default PB.stat PB.coverage.default.png
 ```
 We can now check how the determined cutoff values are positioned across the base coverage graph. This step is essential as the cutoff values assigned at this step will be used to purge the duplications from the draft assembly. To make sure that we are using the right cutoffs, we manually 
 ```bash
-for i in {1,2,3,4,5}; do
+# Manually setting the cutoffs
+for i in {1,2,3,4,5}
+do
  calcuts -l {a} -m {b} -u {c} PB.stat > cutoffs.m$i
  (m1: a=2, b=21, c=220; m2: a=1, b=21, c=220; m3: a=1, b=17, c=220; m4: a=1, b=21, c=500; m5: a=1, b=21, c=501)
  scripts/hist_plot.py -c cutoffs.m$i PB.stat PB.coverage.m$i.png
@@ -49,13 +51,16 @@ get_seqs -l 500 -e dups.m$i.bed ./draft.assembly.fa -p draft.m$i.endpurged
 ```
 
 ```bash
+# Using MERQURY
 $MERQURY/merqury.sh ../illumina.meryl ~/path/to/dir/in/draft.m$i.endpurged.purged.fa \
  ~/path/to/dir/in/draft.m$i.endpurged.hap.fa purge.m$i.merqury
+# Using BUSCO
 busco -i ~/path/to/dir/in/draft.m$i.endpurged.purged.fa -o draft.m$i.endpurged -m genome -l ./endopterygota_odb10 \
  --download_path ./busco_downloads --offline -c $threads
 ```
 
 ```bash
+# Using BlobTools
 blobtools create --fasta ~/path/to/dir/in/draft.m$i.endpurged.purged.fa ~/path/to/dir/out/assembly-blob
 blobtools add --busco  ~/path/to/dir/in/full_table.tsv ~/path/to/dir/out/assembly-blob
 blobtools view --remote ~/path/to/dir/out/assembly-blob
