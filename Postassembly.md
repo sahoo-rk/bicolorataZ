@@ -33,30 +33,39 @@ pbcstat draft.lr.map.paf.gz        # outputs are PB.base.cov & PB.stat files
 calcuts PB.stat > cutoffs.default 2> calcults.log
 scripts/hist_plot.py -c cutoffs.default PB.stat PB.coverage.default.png
 ```
-We can now check how the determined cutoff values are positioned across the base coverage graph. This step is essential as the cutoff values assigned at this step will be used to purge the duplications from the draft assembly. To make sure that we are using the right cutoffs, we manually 
+We can now check how the determined cutoff values are positioned across the base coverage graph. This step is essential as the cutoff values assigned at this step will be used to purge the duplications from the draft assembly. To make sure that we are using the right cutoffs, we manually set different sets of the cutoff and test which one of them performs best in purging duplicates, but at the same time not over purging.
 ```bash
 # Manually setting the cutoffs
-for i in {1,2,3,4,5}
+for i in $(c(1,2,3,4,5))
 do
  calcuts -l {a} -m {b} -u {c} PB.stat > cutoffs.m$i
  (m1: a=2, b=21, c=220; m2: a=1, b=21, c=220; m3: a=1, b=17, c=220; m4: a=1, b=21, c=500; m5: a=1, b=21, c=501)
  scripts/hist_plot.py -c cutoffs.m$i PB.stat PB.coverage.m$i.png
 done
 ```
-
+Now we iteratively purge the draft assembly with the cutoff values set at the previous step.
 ```bash
 # Purging the assembly
-purge_dups -2 -T cutoffs.m$i -c PB.base.cov ./draft.split.self.paf.gz > dups.m$i.bed 2> purge_dups.m$i.log
-get_seqs -l 500 -e dups.m$i.bed ./draft.assembly.fa -p draft.m$i.endpurged
+for i in {1..5}
+do
+ purge_dups -2 -T cutoffs.m$i -c PB.base.cov ./draft.split.self.paf.gz > dups.m$i.bed 2> purge_dups.m$i.log
+ get_seqs -l 500 -e dups.m$i.bed ./draft.assembly.fa -p draft.m$i.endpurged
+done
 ```
-
+After purging, we assess the purged assemblies and compare. Here, we used k-mer based statistics from MERQURY and orthology completeness from BUSCO. 
 ```bash
 # Using MERQURY
-$MERQURY/merqury.sh ../illumina.meryl ~/path/to/dir/in/draft.m$i.endpurged.purged.fa \
- ~/path/to/dir/in/draft.m$i.endpurged.hap.fa purge.m$i.merqury
+for i in {1..5}
+do
+ $MERQURY/merqury.sh ../illumina.meryl ~/path/to/dir/in/draft.m$i.endpurged.purged.fa \
+  ~/path/to/dir/in/draft.m$i.endpurged.hap.fa purge.m$i.merqury
+done
 # Using BUSCO
-busco -i ~/path/to/dir/in/draft.m$i.endpurged.purged.fa -o draft.m$i.endpurged -m genome -l ./endopterygota_odb10 \
- --download_path ./busco_downloads --offline -c $threads
+for i in {1..5}
+do
+ busco -i ~/path/to/dir/in/draft.m$i.endpurged.purged.fa -o draft.m$i.endpurged -m genome -l ./endopterygota_odb10 \
+  --download_path ./busco_downloads --offline -c $threads
+done
 ```
 
 ```bash
