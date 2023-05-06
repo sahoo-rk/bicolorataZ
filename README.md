@@ -11,8 +11,7 @@ To make sure that all the syntax used in the analysis pipeline are clear to the 
 
 The pipeline has a simplified route. [Preassembly.md](../main/1.%20Preassembly.md) records the quality assessment steps that we follow to check and filter low quality reads and biological/methodological contaminants of minor interest from the raw sequence data. Once the raw data is cleaned, we follow a series of methods in the [Assembly.md](../main/2.%20Assembly.md) stage to establish the most probable connections among the reads forming contigs or scaffolds or chromosomes, if possible. We then test the assembled fragments for quality and completeness using certain measurable parameters in the [Postassembly.md](../main/3.%20Postassembly.md) stage.
 
-As an ecologist by training, I have had a steep learning curve while working with the high-throughput sequence data. However, I realise that this period has been one of the most engaging part of my current research as I learn and apply the bioinformatic fundamentals and tools to explore and understand the unknown.
-
 Hope this pipeline will be an useful asset to the readers, particulary to the researchers from non-bioinformatics background.  
 Wish the best!
 
+> Note: This assembly and annotation pipeline is not exhaustive in nature. We find the training programs from the [Galaxy Project](https://training.galaxyproject.org) very resourceful and comprehensive, and recommend the same to our readers.
