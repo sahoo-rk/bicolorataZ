@@ -1,7 +1,7 @@
 # bicolorataZ
 Genome assembly and annotation pipeline of *Zygogramma bicolorata*, commonly known as the 'Parthenium beetle' or 'Mexican beetle'.
 
-> This repository has two primary agenda: one, a supplementary material to our research publication XXX on the beetle genome assembly; two, a guide to the non-bioinformaticians to get acquainted to the genome assembly pipeline.
+> This repository has two primary agenda: one, a supplementary material to our research publication XXX on the beetle genome assembly; two, a guide to the non-bioinformaticians to get acquainted with the genome assembly pipeline.
 
 To make sure that all the syntax used in the analysis pipeline are clear to the reader, few key notations need to be clarified:  
 `~/path/to/dir` denotes path to the directory of interest.  
@@ -13,4 +13,4 @@ The pipeline has a simplified route. [Preassembly.md](../main/1.%20Preassembly.m
 
 Wish the best!
 
-> Note: This pipeline is not exhaustive in nature. The training programs from the [Galaxy Project](https://training.galaxyproject.org) are comprehensive and resourceful. Readers may gein further into the pipeline by following those tutorials.
+> Note: This pipeline is not exhaustive in nature. Training programs at the [Galaxy Project](https://training.galaxyproject.org) are comprehensive and resourceful. Readers may gain further insight into the pipeline by following those tutorials.
