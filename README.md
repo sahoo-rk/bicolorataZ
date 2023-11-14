@@ -1,4 +1,4 @@
-# bicolorataZnome
+# bicolorataZ(nome)
 Genome assembly and annotation pipeline of *Zygogramma bicolorata*, commonly known as the 'Parthenium beetle' or 'Mexican beetle'.
 
 > This repository has two primary agenda: one, a supplementary material to the research publication [Sahoo et al 2023](https://doi.org/10.1093/gbe/evad188) on the beetle genome assembly; two, a guide to the non-bioinformaticians to get acquainted with the genome assembly pipeline.
