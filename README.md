@@ -2,6 +2,7 @@
 Genome assembly and annotation pipeline of *Zygogramma bicolorata*, commonly known as the 'Parthenium beetle' or 'Mexican beetle'.
 
 > This repository has two primary agenda: one, a supplementary material to the research publication [Sahoo et al 2023](https://doi.org/10.1093/gbe/evad188) on the beetle genome assembly; two, a guide to the non-bioinformaticians to get acquainted with the genome assembly pipeline.
+> If you find this pipeline useful, please consider citing our publication at [Sahoo et al 2023](https://doi.org/10.1093/gbe/evad188).
 
 To make sure that all the syntax used in the analysis pipeline are clear to the reader, few key notations need to be clarified:  
 `~/path/to/dir` denotes path to the directory of interest.  
