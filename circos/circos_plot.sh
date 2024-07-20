@@ -1,0 +1,29 @@
+#! /bin/bash
+
+##Plotting mitochondrial genomes with a fasta of your genome, MITOS server, and CIRCOS plotting app
+
+GENOME=../assembly.fasta
+BEDFILE=../mitos_2_beetle_mito.bed
+NAME=contig_1 ##Name has to match whats in the 1st column of the BED file.
+
+##Check if the FASTA newlines are DOS.  This screwed up some software for me at least once.
+doslines=$(hexdump -C $GENOME | grep "0d 0a" | wc -l)
+if [ $doslines -gt '0' ]
+then
+echo "FASTA was in DOS format (CRLF).  Converting to UNIX format."
+fromdos $GENOME
+fi
+
+##Figure out how long the mitochondrial genome is
+seqkit stat $GENOME
+GENOME_LENGTH=$(seqkit stat $GENOME | grep "FASTA" | tr -s " " | cut -d " " -f 5 | tr -d ",")
+GENOME_LENGTH=$(expr $GENOME_LENGTH - 1)
+
+echo "chr1 - mito mito 0 $GENOME_LENGTH black" > mitochondrial_genome.txt
+
+cat $BEDFILE | sed "s/$NAME/mito/g" | sed "s/repeat_unit/IGNOREME/g" | cut -f 1,2,3,4 > Mitochondrial_elements.txt
+cat Mitochondrial_elements.txt | grep -v "IGNOREME" | grep -v "trn" > no_tRNA_Mitochondrial_elements.txt
+cat Mitochondrial_elements.txt | grep -v "IGNOREME" | grep "trn" > yes_tRNA_Mitochondrial_elements.txt
+
+##Circos needs the various *.conf files in the same directory.
+circos
